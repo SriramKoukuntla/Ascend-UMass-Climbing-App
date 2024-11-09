@@ -70,8 +70,8 @@ class _LoginPageState extends State<LoginPage> {
                     },
                     style: ElevatedButton.styleFrom(
                       backgroundColor: isStaffLogin
-                          ? Colors.white.withOpacity(0.4)
-                          : Colors.white.withOpacity(0.8),
+                          ? Colors.white.withOpacity(0.7)
+                          : Colors.white.withOpacity(1),
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(12),
                       ),
@@ -90,8 +90,8 @@ class _LoginPageState extends State<LoginPage> {
                     },
                     style: ElevatedButton.styleFrom(
                       backgroundColor: isStaffLogin
-                          ? Colors.white.withOpacity(0.8)
-                          : Colors.white.withOpacity(0.4),
+                          ? Colors.white.withOpacity(1)
+                          : Colors.white.withOpacity(0.7),
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(12),
                       ),
@@ -109,7 +109,7 @@ class _LoginPageState extends State<LoginPage> {
               Container(
                 padding: const EdgeInsets.symmetric(horizontal: 15.0),
                 decoration: BoxDecoration(
-                  color: Colors.white.withOpacity(0.8),
+                  color: Colors.white.withOpacity(1),
                   borderRadius: BorderRadius.circular(12),
                 ),
                 child: const TextField(
@@ -126,7 +126,7 @@ class _LoginPageState extends State<LoginPage> {
               Container(
                 padding: const EdgeInsets.symmetric(horizontal: 15.0),
                 decoration: BoxDecoration(
-                  color: Colors.white.withOpacity(0.8),
+                  color: Colors.white.withOpacity(1),
                   borderRadius: BorderRadius.circular(12),
                 ),
                 child: const TextField(
@@ -153,19 +153,50 @@ class _LoginPageState extends State<LoginPage> {
                     );
                   },
                   style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.white.withOpacity(0.8),
+                    backgroundColor: Colors.white.withOpacity(1),
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(12),
                     ),
                   ),
                   child: Text(
-                    isStaffLogin ? 'Sign In as Staff' : 'Sign In as Non-Staff',
+                    isStaffLogin ? 'Sign In as Staff' : 'Sign In',
                     style: const TextStyle(
                       color: Colors.blue,
                       fontSize: 18,
                       fontWeight: FontWeight.bold,
                     ),
                   ),
+                  
+                ),
+              ),
+              const SizedBox(height: 16),
+              // Dynamic Sign Up Button (Staff / Non-Staff)
+              SizedBox(
+                width: double.infinity,
+                child: ElevatedButton(
+                  onPressed: () {
+                    // Redirect to the app's main navigation page
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => const HomePage()),
+                    );
+                  },
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Colors.white.withOpacity(1),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(12),
+                    ),
+                  ),
+                  child: Text(
+                    isStaffLogin ? 'Sign Up as Staff' : 'Sign Up',
+                    style: const TextStyle(
+                      color: Colors.blue,
+                      fontSize: 18,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  
                 ),
               ),
             ],
@@ -192,8 +223,8 @@ class _HomePageState extends State<HomePage> {
     const ClimbingMapPage(),
     const VideosPage(),
     const ForumPage(),
-    const AnnouncementsPage(),
     const AnalyticsPage(),
+    const AnnouncementsPage(),
   ];
 
   void _onItemTapped(int index) {
@@ -223,12 +254,12 @@ class _HomePageState extends State<HomePage> {
             label: 'Forum',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.announcement),
-            label: 'Announcements',
-          ),
-          BottomNavigationBarItem(
             icon: Icon(Icons.bar_chart),
             label: 'Analytics',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.announcement),
+            label: 'Announcements',
           ),
         ],
         selectedItemColor: Colors.blueAccent,
@@ -297,26 +328,6 @@ class ForumPage extends StatelessWidget {
   }
 }
 
-// Placeholder for Announcements Page
-class AnnouncementsPage extends StatelessWidget {
-  const AnnouncementsPage({Key? key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('Announcements'),
-      ),
-      body: const Center(
-        child: Text(
-          'Gym announcements, wall changes, hours, etc.',
-          style: TextStyle(fontSize: 18),
-        ),
-      ),
-    );
-  }
-}
-
 // Placeholder for Analytics Page
 class AnalyticsPage extends StatelessWidget {
   const AnalyticsPage({Key? key}) : super(key: key);
@@ -330,6 +341,27 @@ class AnalyticsPage extends StatelessWidget {
       body: const Center(
         child: Text(
           'Peak hours and leaderboard go here',
+          style: TextStyle(fontSize: 18),
+        ),
+      ),
+    );
+  }
+}
+
+
+// Placeholder for Announcements Page
+class AnnouncementsPage extends StatelessWidget {
+  const AnnouncementsPage({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('Announcements'),
+      ),
+      body: const Center(
+        child: Text(
+          'Gym announcements, wall changes, hours, etc.',
           style: TextStyle(fontSize: 18),
         ),
       ),
