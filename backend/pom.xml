@@ -11,8 +11,8 @@
 	<groupId>com.umassascend</groupId>
 	<artifactId>backend</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>spring-boot</name>
-	<description>Demo project for Spring Boot</description>
+	<name>backend</name>
+	<description>Demo project for HackUmass</description>
 	<url/>
 	<licenses>
 		<license/>
