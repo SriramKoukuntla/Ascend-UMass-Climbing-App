@@ -1,10 +1,10 @@
-package com.UMass.Ascend;
+package com.umassascend.hackumass;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class AscendApplicationTests {
+class HackumassApplicationTests {
 
 	@Test
 	void contextLoads() {
