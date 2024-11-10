@@ -1,10 +1,19 @@
 package com.example.ascend.hackumass.model;
 
 public class Route {
+    private String routeName;
     private String season;
     private int level;
     private String type;
     private int points;
+
+    // Getter and Setter for routeName
+    public String getRouteName() {
+        return this.routeName;
+    }
+    public void setRouteName(String routeName) {
+        this.routeName = routeName;
+    }
 
     // Getter and Setter for season
     public String getSeason() {
