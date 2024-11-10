@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'climbing_map_page.dart';
-import 'videos_page.dart';
+import 'list_page.dart';
 import 'forum_page.dart';
 import 'analytics_page.dart';
 import 'announcements_page.dart';
+import 'ranked_page.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -19,6 +20,7 @@ class _HomePageState extends State<HomePage> {
     const ClimbingMapPage(),
     const ClimbingListPage(),
     const ForumPage(),
+    const RankedPage(),
     const AnalyticsPage(),
     const AnnouncementsPage(),
   ];
@@ -42,12 +44,16 @@ class _HomePageState extends State<HomePage> {
             label: 'Climbing Map',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.video_library),
-            label: 'Videos',
+            icon: Icon(Icons.list),
+            label: 'List',
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.forum),
             label: 'Forum',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.star),
+            label: 'Ranked',
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.bar_chart),
