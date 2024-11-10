@@ -2,6 +2,7 @@ package com.example.ascend.hackumass.controller;
 
 import com.example.ascend.hackumass.model.User;
 import com.example.ascend.hackumass.model.UserAuthentication;
+import com.example.ascend.hackumass.model.Forum;
 import com.example.ascend.hackumass.model.Leaderboard;
 
 import java.util.List;
@@ -17,6 +18,7 @@ public class MasterController {
 
     private final UserAuthentication userAuthentication = new UserAuthentication();
     private final Leaderboard leaderboard = new Leaderboard();
+    private final Forum  forum = new Forum ();
 
 
     @PostMapping("/login")
@@ -42,8 +44,18 @@ public class MasterController {
     @GetMapping("/top10")
     public List<Map.Entry<User, Integer>> getTop10Users() {
         return leaderboard.getTop10Users();
+    }  
+
+    // Endpoint to add a post to the forum
+    @PostMapping("/add")
+    public String addPost(@RequestBody String text) {
+        forum.addPost(text);
+        return "Post added successfully";
     }
 
-    
-    
+    // Endpoint to get all posts from the forum
+    @GetMapping("/posts")
+    public List<String> getAllPosts() {
+        return forum.getAllPosts();
+    }
 }
