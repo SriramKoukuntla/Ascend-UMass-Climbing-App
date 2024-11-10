@@ -1,11 +1,12 @@
 package com.example.ascend.hackumass.model;
 import java.util.HashMap;
+import java.util.Map;
 
-public class UserAuthentication {
+public class Userbase {
     private HashMap<String, User> users;
 
     // Constructor to initialize the HashMap
-    public UserAuthentication() {
+    public Userbase() {
         users = new HashMap<>();
     }
 
@@ -46,4 +47,9 @@ public class UserAuthentication {
 
         return user.isStaff() ? "Staff logged in successfully" : "Regular logged in successfully";
     }
+
+    
+
+
+
 }

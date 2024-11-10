@@ -20,16 +20,17 @@ public class MasterController {
     private final Leaderboard leaderboard = new Leaderboard();
     private final Forum  forum = new Forum ();
 
+    @PostMapping("/signup")
+    public String signup(@RequestBody User user) {
+        return userAuthentication.signup(user.getUsername(), user.getPassword(), user.isStaff());
+    }
+
 
     @PostMapping("/login")
     public String login(@RequestBody User user) {
-        return userAuthentication.login(user.getUsername(), user.getPassword());
+        return userAuthentication.login(user.getUsername(), user.getPassword(), user.isStaff());
     }
 
-    @PostMapping("/signup")
-    public String signup(@RequestBody User user) {
-        return userAuthentication.signup(user.getUsername(), user.getPassword());
-    }
 
    @PostMapping("/addScore")
    public void addScore(@RequestBody User user, int score) {
