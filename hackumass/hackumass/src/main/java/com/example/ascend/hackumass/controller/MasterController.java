@@ -27,7 +27,7 @@ public class MasterController {
     //UserAuthentification
     @PostMapping("/signup")
     public String signup(@RequestBody User user) {
-        return userAuthentication.signup(user.getUsername(), user.getPassword(), user.isStaff());
+        return userBase.signup(user.getUsername(), user.getPassword(), user.isStaff());
     }
 
 
