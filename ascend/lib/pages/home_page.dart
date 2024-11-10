@@ -21,7 +21,7 @@ class _HomePageState extends State<HomePage> {
     const ClimbingListPage(),
     const ForumPage(),
     const RankedPage(),
-    const AnalyticsPage(),
+    /*const AnalyticsPage(),*/
     const AnnouncementsPage(),
   ];
 
@@ -55,10 +55,10 @@ class _HomePageState extends State<HomePage> {
             icon: Icon(Icons.star),
             label: 'Ranked',
           ),
-          BottomNavigationBarItem(
+          /*BottomNavigationBarItem(
             icon: Icon(Icons.bar_chart),
             label: 'Analytics',
-          ),
+          ),*/
           BottomNavigationBarItem(
             icon: Icon(Icons.announcement),
             label: 'Announcements',
