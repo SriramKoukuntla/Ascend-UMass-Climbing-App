@@ -1,5 +1,8 @@
-import 'package:flutter/material.dart';
+  
+/*import 'package:flutter/material.dart';
 import '/pages/home_page.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({Key? key}) : super(key: key);
@@ -9,7 +12,67 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
-  bool isStaffLogin = false; // Track whether it is staff or non-staff login
+  bool isStaffLogin = false;
+  final TextEditingController _usernameController = TextEditingController();
+  final TextEditingController _passwordController = TextEditingController();
+  bool _isLoading = false;
+Future<void> _handleLogin() async {
+    setState(() {
+      _isLoading = true;
+    });
+
+    try {
+      final response = await http.post(
+        Uri.parse('http://localhost:8080/login'), // Added http:// scheme and /login endpoint
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: jsonEncode({
+          'username': _usernameController.text,
+          'password': _passwordController.text,
+          'isStaff': isStaffLogin,
+        }),
+      );
+
+      if (response.statusCode == 200) {
+        // Successful login
+        final responseData = jsonDecode(response.body);
+        // You might want to store the token or user data here
+        
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(builder: (context) => const HomePage()),
+        );
+      } else {
+        // Handle login failure
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            content: Text('Login failed. Please check your credentials.'),
+            backgroundColor: Colors.red,
+          ),
+        );
+      }
+    } catch (e) {
+      // Handle network or other errors
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text('Error: ${e.toString()}'),
+          backgroundColor: Colors.red,
+        ),
+      );
+    } finally {
+      setState(() {
+        _isLoading = false;
+      });
+    }
+}
+
+  @override
+  void dispose() {
+    _usernameController.dispose();
+    _passwordController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -81,9 +144,9 @@ class _LoginPageState extends State<LoginPage> {
                 ],
               ),
               const SizedBox(height: 20),
-              _buildTextField('Username'),
+              _buildTextField('Username', controller: _usernameController),
               const SizedBox(height: 20),
-              _buildTextField('Password', obscureText: true),
+              _buildTextField('Password', controller: _passwordController, obscureText: true),
               const SizedBox(height: 30),
               _buildSignInButton(isStaffLogin),
               const SizedBox(height: 16),
@@ -95,7 +158,10 @@ class _LoginPageState extends State<LoginPage> {
     );
   }
 
-  Widget _buildTextField(String label, {bool obscureText = false}) {
+  Widget _buildTextField(String label, {
+    bool obscureText = false,
+    required TextEditingController controller,
+  }) {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 15.0),
       decoration: BoxDecoration(
@@ -103,6 +169,7 @@ class _LoginPageState extends State<LoginPage> {
         borderRadius: BorderRadius.circular(12),
       ),
       child: TextField(
+        controller: controller,
         obscureText: obscureText,
         decoration: InputDecoration(
           border: InputBorder.none,
@@ -117,27 +184,30 @@ class _LoginPageState extends State<LoginPage> {
     return SizedBox(
       width: double.infinity,
       child: ElevatedButton(
-        onPressed: () {
-          // Redirect to the home page
-          Navigator.push(
-            context,
-            MaterialPageRoute(builder: (context) => const HomePage()),
-          );
-        },
+        onPressed: _isLoading ? null : _handleLogin,
         style: ElevatedButton.styleFrom(
           backgroundColor: Colors.white.withOpacity(1),
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(12),
           ),
         ),
-        child: Text(
-          isStaffLogin ? 'Sign In as Staff' : 'Sign In',
-          style: const TextStyle(
-            color: Colors.blue,
-            fontSize: 18,
-            fontWeight: FontWeight.bold,
-          ),
-        ),
+        child: _isLoading
+            ? const SizedBox(
+                height: 20,
+                width: 20,
+                child: CircularProgressIndicator(
+                  strokeWidth: 2,
+                  valueColor: AlwaysStoppedAnimation<Color>(Colors.blue),
+                ),
+              )
+            : Text(
+                isStaffLogin ? 'Sign In as Staff' : 'Sign In',
+                style: const TextStyle(
+                  color: Colors.blue,
+                  fontSize: 18,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
       ),
     );
   }
@@ -147,7 +217,7 @@ class _LoginPageState extends State<LoginPage> {
       width: double.infinity,
       child: ElevatedButton(
         onPressed: () {
-          // Redirect to the home page
+          // Implement sign up logic
           Navigator.push(
             context,
             MaterialPageRoute(builder: (context) => const HomePage()),
@@ -170,4 +240,4 @@ class _LoginPageState extends State<LoginPage> {
       ),
     );
   }
-}
+}*/

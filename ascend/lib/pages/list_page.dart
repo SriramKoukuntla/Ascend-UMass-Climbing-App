@@ -70,15 +70,15 @@ class _VideoPlayerPageState extends State<VideoPlayerPage> {
                   child: FittedBox(
                     fit: BoxFit.contain,
                     child: SizedBox(
-                      width: _controller.value.size.width-500,
-                      height: _controller.value.size.height-200,
+                      width: _controller.value.size.width-800,
+                      height: _controller.value.size.height,
                       child: Stack(
                         children: [
                           VideoPlayer(_controller),
                           if (_showControls)
                             Center(
                               child: IconButton(
-                                iconSize: 50.0,
+                                iconSize: 250.0,
                                 icon: Icon(
                                   _controller.value.isPlaying ? Icons.pause : Icons.play_arrow,
                                   color: Colors.white,
