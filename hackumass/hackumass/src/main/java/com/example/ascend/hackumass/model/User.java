@@ -46,6 +46,10 @@ public class User {
         this.climbHistory = climbHistory;
     }
 
+    public void addClimbHistory(Route route){
+        this.climbHistory.add(route);
+    }
+
     // Getter and Setter for rank
     public int getElo() {
         return elo;

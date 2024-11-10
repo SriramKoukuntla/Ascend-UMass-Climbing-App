@@ -108,8 +108,11 @@ public class Userbase {
         }
         for (Route route : requests.get(username)) {
             if (route.getRouteName() == routeName){
+                //Increasing ELo
                 int prevElo = users.get(username).getElo();
                 users.get(username).setElo( prevElo + route.getPoints());
+                //Update History
+                // users.get(username).addClimbHistory(route);
                 return "Route Successfully Approved";
             }
         }

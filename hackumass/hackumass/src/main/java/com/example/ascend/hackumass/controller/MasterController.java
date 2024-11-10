@@ -20,6 +20,7 @@ public class MasterController {
     private final Leaderboard leaderboard = new Leaderboard();
     private final Forum  forum = new Forum ();
 
+    //UserAuthentification
     @PostMapping("/signup")
     public String signup(@RequestBody User user) {
         return userAuthentication.signup(user.getUsername(), user.getPassword(), user.isStaff());
@@ -31,7 +32,7 @@ public class MasterController {
         return userAuthentication.login(user.getUsername(), user.getPassword(), user.isStaff());
     }
 
-
+    //History/Elo/Rank
    @PostMapping("/addScore")
    public void addScore(@RequestBody User user, int score) {
        leaderboard.addScore(user, score);
@@ -59,4 +60,5 @@ public class MasterController {
     public List<String> getAllPosts() {
         return forum.getAllPosts();
     }
+
 }
