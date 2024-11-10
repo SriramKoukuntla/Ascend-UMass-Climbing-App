@@ -118,4 +118,21 @@ public class Userbase {
         }
         return "Route not found";
     }
+
+    public String rejectRoute(String username, String routeName){
+        if (!requests.containsKey(username) || requests.get(username).isEmpty()) {
+            return "No request from username";
+        }
+        for (Route route : requests.get(username)) {
+            if (route.getRouteName() == routeName){
+                //Increasing Elo
+                int prevElo = users.get(username).getElo();
+                users.get(username).setElo( prevElo + route.getPoints());
+                //Update History
+                // users.get(username).addClimbHistory(route);
+                return "Route Successfully Rejected";
+            }
+        }   
+        return "Route not found";
+    }
 }
