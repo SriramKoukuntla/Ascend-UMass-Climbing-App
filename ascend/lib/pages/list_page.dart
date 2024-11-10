@@ -1,5 +1,80 @@
+import 'package:ascend/pages/climbing_map_page.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:video_player/video_player.dart';
+
+class VideoPlayerPage extends StatefulWidget {
+  final String videoPath;
+  final String routeName;
+
+  const VideoPlayerPage({
+    Key? key,
+    required this.videoPath,
+    required this.routeName,
+  }) : super(key: key);
+
+  @override
+  _VideoPlayerPageState createState() => _VideoPlayerPageState();
+}
+
+class _VideoPlayerPageState extends State<VideoPlayerPage> {
+  late VideoPlayerController _controller;
+  late Future<void> _initializeVideoPlayerFuture;
+
+  @override
+  void initState() {
+    super.initState();
+    _controller = VideoPlayerController.asset(widget.videoPath);
+    _initializeVideoPlayerFuture = _controller.initialize();
+    _controller.setLooping(true);
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text(widget.routeName),
+      ),
+      body: FutureBuilder(
+        future: _initializeVideoPlayerFuture,
+        builder: (context, snapshot) {
+          if (snapshot.connectionState == ConnectionState.done) {
+            return Center(
+              child: AspectRatio(
+                aspectRatio: _controller.value.aspectRatio,
+                child: VideoPlayer(_controller),
+              ),
+            );
+          } else {
+            return const Center(
+              child: CircularProgressIndicator(),
+            );
+          }
+        },
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          setState(() {
+            if (_controller.value.isPlaying) {
+              _controller.pause();
+            } else {
+              _controller.play();
+            }
+          });
+        },
+        child: Icon(
+          _controller.value.isPlaying ? Icons.pause : Icons.play_arrow,
+        ),
+      ),
+    );
+  }
+}
 
 class ClimbingRoute {
   final String name;
@@ -40,13 +115,21 @@ class ClimbingRoute {
 }
 
 class ClimbingListPage extends StatefulWidget {
-  const ClimbingListPage({Key? key}) : super(key: key);
+  final String? initialRouteName;
+  final bool shouldShowRouteDialog;
+
+  const ClimbingListPage({
+    Key? key, 
+    this.initialRouteName,
+    this.shouldShowRouteDialog = false,
+  }) : super(key: key);
 
   @override
   State<ClimbingListPage> createState() => _ClimbingListPageState();
 }
 
 class _ClimbingListPageState extends State<ClimbingListPage> {
+  final ScrollController _scrollController = ScrollController();
   final List<String> attributes = [
     'All', 'Crimps', 'Jugs', 'Slopers', 'Dyno', 'Pinches', 'Compression', 
     'Sidepulls', 'Technical',
@@ -134,6 +217,39 @@ class _ClimbingListPageState extends State<ClimbingListPage> {
     // Sort routes by grade
     routes.sort((a, b) => _getGradeValue(a.grade).compareTo(_getGradeValue(b.grade)));
     _loadCompletionStatuses();
+    
+    // Scroll to the initial route if specified
+    if (widget.initialRouteName != null) {
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        _scrollToRoute(widget.initialRouteName!, showDialog: widget.shouldShowRouteDialog);
+      });
+    }
+  }
+
+  void _scrollToRoute(String routeName, {bool showDialog = false}) {
+    final filteredRoutes = routes.where((route) =>
+      (_selectedAttribute == 'All' || route.attributes.contains(_selectedAttribute)) &&
+      _isGradeSelected(route.grade)
+    ).toList();
+
+    final index = filteredRoutes.indexWhere((route) => route.name == routeName);
+    if (index != -1) {
+      final itemHeight = 80.0; // Approximate height of each list item
+      final offset = index * itemHeight;
+      _scrollController.animateTo(
+        offset,
+        duration: const Duration(milliseconds: 500),
+        curve: Curves.easeInOut,
+      );
+
+      // Show route dialog if requested
+      if (showDialog) {
+        final route = filteredRoutes[index];
+        Future.delayed(const Duration(milliseconds: 600), () {
+          _showRouteDialog(context, route);
+        });
+      }
+    }
   }
 
   Future<void> _loadCompletionStatuses() async {
@@ -144,9 +260,7 @@ class _ClimbingListPageState extends State<ClimbingListPage> {
   }
 
   void _showRouteDialog(BuildContext context, ClimbingRoute route) {
-    // Helper function to determine if a color is dark
     bool isDarkColor(Color color) {
-      // Calculate relative luminance using standard formula
       double luminance = (0.299 * color.red + 0.587 * color.green + 0.114 * color.blue) / 255;
       return luminance < 0.5;
     }
@@ -226,9 +340,17 @@ class _ClimbingListPageState extends State<ClimbingListPage> {
                         ),
                       ),
                       ElevatedButton.icon(
-                        onPressed: () {
-                          // Implement video viewing
-                        },
+                        onPressed: route.name == "Dyno King" ? () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => VideoPlayerPage(
+                                videoPath: 'assets/dyno_king.mp4',
+                                routeName: route.name,
+                              ),
+                            ),
+                          );
+                        } : null,
                         icon: Icon(
                           Icons.play_circle_filled,
                           color: isDarkColor(route.gradeColor) ? Colors.white : Colors.black,
@@ -246,6 +368,7 @@ class _ClimbingListPageState extends State<ClimbingListPage> {
                             horizontal: 20,
                             vertical: 10
                           ),
+                          disabledBackgroundColor: Colors.grey,
                         ),
                       ),
                     ],
@@ -277,7 +400,6 @@ class _ClimbingListPageState extends State<ClimbingListPage> {
     }
     return false;
   }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
