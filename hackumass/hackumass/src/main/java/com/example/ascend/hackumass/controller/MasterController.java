@@ -3,6 +3,7 @@ package com.example.ascend.hackumass.controller;
 import com.example.ascend.hackumass.model.Route;
 import com.example.ascend.hackumass.model.User;
 import com.example.ascend.hackumass.model.Userbase;
+import com.example.ascend.hackumass.model.RouteRequest;
 
 // import com.example.ascend.hackumass.model.Forum;
 // import com.example.ascend.hackumass.model.Leaderboard;
@@ -37,8 +38,32 @@ public class MasterController {
 
     // History/Elo/Rank
     @PostMapping("/requestRoute")
-    public String requestRoute(@RequestBody User user, @RequestBody Route route) {
-        return userBase.requestRoute(user.getUsername(), route);
+    public String requestRoute(@RequestBody RouteRequest routeRequest) {
+        return userBase.requestRoute(routeRequest.getUsername(), routeRequest.getRoute());
     }
 
+    @PostMapping("/getElo")
+    public int getElo(@RequestBody User user) {
+        return userBase.getElo(user.getUsername());
+    }
+
+    @PostMapping("/requestRank")
+    public int requestRank(@RequestBody User user) {
+        return userBase.requestRank(user.getUsername());
+    }
+
+    @GetMapping("/requestTop3")
+    public User[] top3() {
+        return userBase.top3();
+    }
+
+    @PostMapping("/approveRoute")
+    public String approveRoute(@RequestBody RouteRequest routeRequest) {
+        return userBase.approveRoute(routeRequest.getUsername(), routeRequest.getRoute().getRouteName());
+    }
+
+    @PostMapping("/rejectRoute")
+    public String rejectRoute(@RequestBody RouteRequest routeRequest) {
+        return userBase.rejectRoute(routeRequest.getUsername(), routeRequest.getRoute().getRouteName());
+    }
 }

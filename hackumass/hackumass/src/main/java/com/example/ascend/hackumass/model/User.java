@@ -19,6 +19,7 @@ public class User {
     }
     public void setUsername(String username) {
         this.username = username;
+        this.elo = 0;
     }
 
     // Getter and Setter for password

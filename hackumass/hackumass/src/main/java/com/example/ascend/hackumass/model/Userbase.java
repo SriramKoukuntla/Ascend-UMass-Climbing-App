@@ -107,7 +107,7 @@ public class Userbase {
             return "No request from username";
         }
         for (Route route : requests.get(username)) {
-            if (route.getRouteName() == routeName){
+            if (route.getRouteName().equals(routeName)){
                 //Increasing ELo
                 int prevElo = users.get(username).getElo();
                 users.get(username).setElo( prevElo + route.getPoints());
