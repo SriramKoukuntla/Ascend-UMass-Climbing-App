@@ -42,8 +42,8 @@ class _HomePageState extends State<HomePage> {
             label: 'Climbing Map',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.video_library),
-            label: 'Videos',
+            icon: Icon(Icons.list),
+            label: 'List',
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.forum),
