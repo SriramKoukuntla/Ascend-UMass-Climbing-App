@@ -37,9 +37,9 @@ public class MasterController {
     }
 
     // History/Elo/Rank
-    @PostMapping("/routeRequest")
-    public String requestRoute(@RequestBody User user) {
-        return userBase.login(user.getUsername(), );
-    }
+    // @PostMapping("/routeRequest")
+    // public String requestRoute(@RequestBody User user) {
+    //     return userBase.login(user.getUsername(), );
+    // }
 
 }
