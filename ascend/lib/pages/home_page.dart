@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'climbing_map_page.dart';
-import 'videos_page.dart';
+import 'list_page.dart';
 import 'forum_page.dart';
 import 'analytics_page.dart';
 import 'announcements_page.dart';
