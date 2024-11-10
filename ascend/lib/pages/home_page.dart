@@ -17,7 +17,7 @@ class _HomePageState extends State<HomePage> {
 
   final List<Widget> _pages = [
     const ClimbingMapPage(),
-    const VideosPage(),
+    const ClimbingListPage(),
     const ForumPage(),
     const AnalyticsPage(),
     const AnnouncementsPage(),
