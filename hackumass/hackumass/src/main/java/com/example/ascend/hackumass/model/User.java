@@ -1,4 +1,4 @@
-package com.example.ascend.model;
+package com.example.ascend.hackumass.model;
 
 public class User {
     private String username;
