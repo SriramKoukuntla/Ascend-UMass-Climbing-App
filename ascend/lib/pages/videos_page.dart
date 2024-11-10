@@ -283,7 +283,7 @@ class _ClimbingListPageState extends State<ClimbingListPage> {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Climbing Routes'),
-        backgroundColor: Colors.grey[900],
+        backgroundColor: const Color.fromARGB(255, 255, 255, 255),
       ),
       body: Column(
         children: [
