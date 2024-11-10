@@ -2,6 +2,7 @@ import 'package:ascend/pages/climbing_map_page.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:video_player/video_player.dart';
+import 'dart:async';
 
 class VideoPlayerPage extends StatefulWidget {
   final String videoPath;
@@ -20,6 +21,8 @@ class VideoPlayerPage extends StatefulWidget {
 class _VideoPlayerPageState extends State<VideoPlayerPage> {
   late VideoPlayerController _controller;
   late Future<void> _initializeVideoPlayerFuture;
+  bool _showControls = true;
+  Timer? _hideTimer;
 
   @override
   void initState() {
@@ -31,13 +34,27 @@ class _VideoPlayerPageState extends State<VideoPlayerPage> {
 
   @override
   void dispose() {
+    _hideTimer?.cancel();
     _controller.dispose();
     super.dispose();
+  }
+
+  void _handleTap() {
+    setState(() {
+      _showControls = true;
+    });
+    _hideTimer?.cancel();
+    _hideTimer = Timer(const Duration(milliseconds: 1500), () {
+      setState(() {
+        _showControls = false;
+      });
+    });
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.black,
       appBar: AppBar(
         title: Text(widget.routeName),
       ),
@@ -46,9 +63,43 @@ class _VideoPlayerPageState extends State<VideoPlayerPage> {
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.done) {
             return Center(
-              child: AspectRatio(
-                aspectRatio: _controller.value.aspectRatio,
-                child: VideoPlayer(_controller),
+              child: GestureDetector(
+                onTap: _handleTap,
+                child: Container(
+                  color: Colors.black,
+                  child: FittedBox(
+                    fit: BoxFit.contain,
+                    child: SizedBox(
+                      width: _controller.value.size.width-500,
+                      height: _controller.value.size.height-200,
+                      child: Stack(
+                        children: [
+                          VideoPlayer(_controller),
+                          if (_showControls)
+                            Center(
+                              child: IconButton(
+                                iconSize: 50.0,
+                                icon: Icon(
+                                  _controller.value.isPlaying ? Icons.pause : Icons.play_arrow,
+                                  color: Colors.white,
+                                ),
+                                onPressed: () {
+                                  setState(() {
+                                    if (_controller.value.isPlaying) {
+                                      _controller.pause();
+                                    } else {
+                                      _controller.play();
+                                      _handleTap();
+                                    }
+                                  });
+                                },
+                              ),
+                            ),
+                        ],
+                      ),
+                    ),
+                  ),
+                ),
               ),
             );
           } else {
@@ -57,20 +108,6 @@ class _VideoPlayerPageState extends State<VideoPlayerPage> {
             );
           }
         },
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          setState(() {
-            if (_controller.value.isPlaying) {
-              _controller.pause();
-            } else {
-              _controller.play();
-            }
-          });
-        },
-        child: Icon(
-          _controller.value.isPlaying ? Icons.pause : Icons.play_arrow,
-        ),
       ),
     );
   }
@@ -345,7 +382,7 @@ class _ClimbingListPageState extends State<ClimbingListPage> {
                             context,
                             MaterialPageRoute(
                               builder: (context) => VideoPlayerPage(
-                                videoPath: 'assets/dyno_king.mp4',
+                                videoPath: 'assets/Dyno_King.mp4',
                                 routeName: route.name,
                               ),
                             ),
