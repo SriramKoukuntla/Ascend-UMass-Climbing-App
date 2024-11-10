@@ -4,6 +4,10 @@ import com.example.ascend.hackumass.model.User;
 import com.example.ascend.hackumass.model.UserAuthentication;
 import com.example.ascend.hackumass.model.Leaderboard;
 
+import java.util.List;
+import java.util.Map;
+
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -25,12 +29,21 @@ public class MasterController {
         return userAuthentication.signup(user.getUsername(), user.getPassword());
     }
 
-//    @PostMapping("/addScore")
-//    public String login(@RequestBody User user, int score) {
-//        return leaderboard.addScore(user, score);
-//    }
+   @PostMapping("/addScore")
+   public void addScore(@RequestBody User user, int score) {
+       leaderboard.addScore(user, score);
+   }
 
+   @PostMapping("/removeScore")
+   public void removeScore(@RequestBody User user, int score) {
+       leaderboard.removeScore(user);
+   }
 
+    @GetMapping("/top10")
+    public List<Map.Entry<User, Integer>> getTop10Users() {
+        return leaderboard.getTop10Users();
+    }
 
+    
     
 }
