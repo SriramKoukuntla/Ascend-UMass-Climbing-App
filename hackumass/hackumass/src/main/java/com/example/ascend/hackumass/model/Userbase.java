@@ -4,6 +4,8 @@ import java.util.Map;
 
 public class Userbase {
     private HashMap<String, User> users;
+    
+
 
     // Constructor to initialize the HashMap
     public Userbase() {
@@ -48,7 +50,10 @@ public class Userbase {
         return user.isStaff() ? "Staff logged in successfully" : "Regular logged in successfully";
     }
 
-    
+    public String request(String username, Route route){
+
+
+    }
 
 
 

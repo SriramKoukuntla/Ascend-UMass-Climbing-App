@@ -1,6 +1,6 @@
 package com.example.ascend.hackumass.model;
 
-public class Routes {
+public class Route {
     private String season;
     private int level;
     private String type;
