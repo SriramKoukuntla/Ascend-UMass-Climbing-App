@@ -1,7 +1,7 @@
 package com.example.ascend.hackumass.model;
 import java.util.HashMap;
 
-public class UserAthentification {
+public class UserAuthentication {
     private HashMap<String, User> users;
 
     // Constructor to initialize the HashMap
