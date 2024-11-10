@@ -19,11 +19,11 @@ class ClimbingRoute {
     if (grade.startsWith("V10") || grade.contains("V10+")) return Colors.black;
     
     // Then check other grades
-    if (grade.startsWith("V0") || grade.startsWith("V1")) return const Color(0xFF006400); // Dark green
-    if (grade.startsWith("V2") || grade.startsWith("V3")) return const Color(0xFF00008B); // Blue
-    if (grade.startsWith("V4") || grade.startsWith("V5")) return const Color(0xFFFFD700); // Yellow
-    if (grade.startsWith("V6") || grade.startsWith("V7")) return const Color(0xFFFF8C00); // Orange
-    if (grade.startsWith("V8") || grade.startsWith("V9")) return const Color(0xFFFF0000); // Red
+    if (grade.startsWith("V0")) return const Color(0xFF006400); // Dark green
+    if (grade.startsWith("V2")) return const Color(0xFF00008B); // Blue
+    if (grade.startsWith("V4")) return const Color(0xFFFFD700); // Yellow
+    if (grade.startsWith("V6")) return const Color(0xFFFF8C00); // Orange
+    if (grade.startsWith("V8")) return const Color(0xFFFF0000); // Red
     
     return Colors.black; // Default to black for any unmatched grades
   }
